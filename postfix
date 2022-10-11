@@ -1,0 +1,110 @@
+#include <iostream>
+
+using namespace std;
+
+struct node{
+    string value;
+    struct node *next;
+};
+
+struct node *head=NULL;
+struct node *tail=NULL;
+struct node *middle=NULL;
+
+bool isEmpty(){
+
+    return head == NULL;
+}
+
+void InsertData(string data){
+        if (isEmpty()){
+            //struct node *bantuan = (struct node*) malloc(sizeof(struct node));
+            node *bantuan = new node();
+            bantuan->value = data;
+            bantuan->next = NULL;
+            head = bantuan;
+            tail = bantuan;
+        }
+        else{
+            //struct node *bantuan = (struct node*) malloc(sizeof(struct node));
+            node *bantuan = new node();
+            bantuan->value = data;
+            bantuan->next = NULL;
+            tail->next = bantuan;
+            tail = bantuan;
+    }
+    cout << "Data Masuk!" <<endl;
+}
+
+void seek(string data){
+    struct node *isi = head;
+    int ditemukan=0;
+
+    while (isi != NULL){
+        if(isi->value == data){
+            cout << "Atas Nama " << data << " ditemukan"<<endl;
+            cout << "Pesanan Atas Nama " << data << " Sudah Selesai!"<<endl;
+            ditemukan = 1;
+        }
+        isi = isi->next;
+    }
+    if (ditemukan == 0){
+        cout << "Pembeli Atas Nama " << data << " tidak ditemukan" <<endl;
+    }
+}
+
+void display(){
+    struct node *isi = head;
+    int ulang = 1;
+    while (isi != NULL){
+        cout << "Antrian ke-" << ulang<<endl;
+        cout << "Nama = " << isi->value<< ", Next = " << isi->next <<endl;
+        ulang++;
+        isi = isi->next;
+    }
+}
+
+int main(){
+    int pil;
+    string nama;
+
+    do{
+        cout << "-------------------------\n";
+        cout << "Menu \n";
+        cout << "1. Input Nama \n";
+        cout << "2. Panggil Nama \n";
+        cout << "3. Tampilkan Semua Nama \n";
+        cout << "4. Exit " << endl;
+        cout << "Masukkan Pilihan : ";
+        cin  >>pil;
+
+        switch(pil)
+        {
+        case 1:{
+            cout << "--->Masukkan Nama : ";
+            cin.ignore();
+            getline(cin,nama);
+            InsertData(nama);
+            //display();
+            break;
+        }
+
+        case 2:{
+            cout << "--->Pesanan Untuk : ";
+            cin.ignore();
+            getline(cin,nama);
+            seek(nama);
+            display();
+            break;
+        }
+
+        case 3:{
+            cout << "Nama Semua Pembeli : " <<endl;
+            display();
+            break;
+        }
+        }
+    }while(pil != 4);
+
+    return 0;
+}
